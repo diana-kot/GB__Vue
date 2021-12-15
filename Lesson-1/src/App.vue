@@ -1,10 +1,29 @@
 <template>
-  <div id="nav">
-    <!-- <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> -->
+  <div id="ap">
+    
+
+    <Calculator />
+
+    <div class="container">
+      <router-view />
+    </div>
   </div>
-  <router-view/>
+  
 </template>
+
+<script>
+// @ is an alias to /src
+
+import Calculator from '@/components/Calculator.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Calculator
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {
