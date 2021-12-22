@@ -5,8 +5,10 @@
         <div class="title">My personal costs</div>
       </header>
       <main>
-        <add-payment-form @addNewPayment="addToPaymentList"/>
-        <payments-display :items="paymentsList" />
+      
+<add-payment-form @addNewPayment="addToPaymentList"/>
+            <payments-display :items="paymentsList" />    
+        
       </main>
     </div>
   </div>
@@ -15,8 +17,11 @@
 <script>
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
+// import simplebar from 'simplebar-vue';
+// import 'simplebar/dist/simplebar.min.css';
+
 export default {
-  components: { PaymentsDisplay, AddPaymentForm },
+  components: { PaymentsDisplay, AddPaymentForm},
   name: "App",
   data() {
     return {
@@ -72,6 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -82,5 +88,8 @@ export default {
 }
 h1 {
   font-size: 20px;
+}
+.tt {
+  height: 160px;
 }
 </style>
