@@ -6,14 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         paymentList: JSON.parse(localStorage.getItem('pay') || '[]'),
+        // paymentList: [],
         categoryList: [],
     },
     mutations: {
         setPaymentsListData(state, payload){
             state.paymentList = payload
         },
-        addPaymentListData (state, payload) {
-            state.paymentList.push(payload)
+        addPaymentListData (state, data) {
+            state.paymentList.push(data)
             localStorage.setItem('pay', JSON.stringify(state.paymentList))
         },
         getPaymentListFirstElement(state, payload ) {
@@ -25,9 +26,9 @@ export default new Vuex.Store({
     },
     getters: {
         getPaymentListFullValuePrise: state =>{
-                return state.paymentList.reduce((pre, cur)=> pre + cur.value,0)
+                return state.paymentList.reduce((pre, cur)=> pre + cur.value, 0)
         },
-        getPaymentList:state=>state.paymentList,
+        getPaymentList:state => state.paymentList,
         getCategoryList: state => state.categoryList
     },
     actions: {
@@ -44,18 +45,18 @@ export default new Vuex.Store({
                             });
                         }
                         resolve (items);
-                    }, 2000);
+                    }, 1000);
             }).then((res)=> commit('setPaymentsListData', res))
     },
-    addPaymentListData ({commit}, task) {
-        commit('createTask', task)
+    addPaymentListData ({commit}, data) {
+        commit('addPaymentListData', data)
       },
     fetchCategory({ commit }) {
         return new Promise((resolve) => {
           setTimeout(() => {
             const items = ["Sport", "Education", "Internet", "Food", "Transport"];
             resolve(items);
-          }, 2000);
+          }, 1000);
         }).then((res) => commit("setCategoryData", res));
       },
 

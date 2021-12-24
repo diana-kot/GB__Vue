@@ -101,6 +101,7 @@ export default {
     // this.fetch(this.fetchData())
     // this.$store.dispatch('fetchData')
     this.fetchData();
+    
   },
 };
 </script>
