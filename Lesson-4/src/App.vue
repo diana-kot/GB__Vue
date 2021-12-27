@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations ({fetch: 'setPaymentsListData'}),
-    ...mapActions(["fetchData"]),
+    ...mapActions(["addPaymentListData", 'fetchData']),
     changePage(p) {
       this.page = p;
     },
@@ -101,7 +101,7 @@ export default {
     // this.fetch(this.fetchData())
     // this.$store.dispatch('fetchData')
     this.fetchData();
-    
+  
   },
 };
 </script>

@@ -49,7 +49,7 @@ export default {
         category: this.category,
         value: this.value,
       };
-      // this.addPaymentListData(data)
+      this.addPaymentListData(data)
       this.$store.dispatch('addPaymentListData', data)
       // this.$emit('addNewPayment', data)
 
@@ -58,10 +58,7 @@ export default {
   async mounted() {
     if (!this.getCategoryList?.length) {
       await this.fetchCategory();
-  
-     
     }
-     
   },
 };
 </script>

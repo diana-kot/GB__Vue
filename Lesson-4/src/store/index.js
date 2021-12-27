@@ -14,8 +14,9 @@ export default new Vuex.Store({
             state.paymentList = payload
         },
         addPaymentListData (state, data) {
-            state.paymentList.push(data)
             localStorage.setItem('pay', JSON.stringify(state.paymentList))
+            state.paymentList.push(data)
+            
         },
         getPaymentListFirstElement(state, payload ) {
             Vue.set(state.paymentList, 0, payload)
@@ -26,10 +27,11 @@ export default new Vuex.Store({
     },
     getters: {
         getPaymentListFullValuePrise: state =>{
-                return state.paymentList.reduce((pre, cur)=> pre + cur.value, 0)
+            return state.paymentList.reduce((pre, cur)=> pre + cur.value, 0)
         },
         getPaymentList:state => state.paymentList,
-        getCategoryList: state => state.categoryList
+        getCategoryList: state => state.categoryList,
+     
     },
     actions: {
         fetchData ({ commit }) {
@@ -51,6 +53,14 @@ export default new Vuex.Store({
     addPaymentListData ({commit}, data) {
         commit('addPaymentListData', data)
       },
+    
+    // addPaymentListData ({commit}, data) {
+    //     commit('addPaymentListData', data)
+    //   },
+
+
+
+
     fetchCategory({ commit }) {
         return new Promise((resolve) => {
           setTimeout(() => {
