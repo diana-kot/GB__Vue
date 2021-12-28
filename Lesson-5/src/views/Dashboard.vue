@@ -1,49 +1,35 @@
 <template>
-  <div id="app">
-    <div class="wrapper">
-      <header>
-        <div class="title">My personal costs</div>
-        <div class="total" v-if="total">Total:{{ total }}</div>
-      </header>
-      <main>
-      
-      <add-payment-form/>
-      <payments-display :items="currentElements" />    
-      <pagination
-          :cur="page"
-          :n="n"
-          :length="paymentsList.length"
-          @paginate="changePage"
-        />
-        
-      </main>
-    </div>
-  </div>
+  <main>
+    <add-payment-form />
+    <payments-display :items="currentElements" />
+    <pagination
+      :cur="page"
+      :n="n"
+      :length="paymentsList.length"
+      @paginate="changePage"
+    />
+  </main>
 </template>
 
 <script>
-import AddPaymentForm from "./components/AddPaymentForm.vue";
-import PaymentsDisplay from "./components/PaymentsDisplay.vue";
-import Pagination from "./components/Pagination.vue";
-import { mapMutations, mapGetters, mapActions} from "vuex";
-// import simplebar from 'simplebar-vue';
-// import 'simplebar/dist/simplebar.min.css';
-
+import AddPaymentForm from "../components/AddPaymentForm.vue";
+import PaymentsDisplay from "../components/PaymentsDisplay.vue";
+import Pagination from "../components/Pagination.vue";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
-  components: { PaymentsDisplay, AddPaymentForm, Pagination},
-  name: "App",
+  name: "dashboard",
+  components: { PaymentsDisplay, AddPaymentForm, Pagination },
   data() {
     return {
       show: true,
       page: 1,
       n: 10,
-  
     };
   },
   computed: {
-    ...mapGetters({paymentsList: 'getPaymentList'}),
-    total(){
-      return this.$store.getters.getPaymentListFullValuePrise
+    ...mapGetters({ paymentsList: "getPaymentList" }),
+    total() {
+      return this.$store.getters.getPaymentListFullValuePrise;
     },
     currentElements() {
       const { n, page } = this;
@@ -51,8 +37,8 @@ export default {
     },
   },
   methods: {
-    ...mapMutations ({fetch: 'setPaymentsListData'}),
-    ...mapActions(["addPaymentListData", 'fetchData']),
+    ...mapMutations({ fetch: "setPaymentsListData" }),
+    ...mapActions(["addPaymentListData", "fetchData"]),
     changePage(p) {
       this.page = p;
     },
@@ -96,30 +82,17 @@ export default {
     //   this.paymentsList = [...this.paymentsList, props];
     // },
   },
-  created() {
+  async created() {
     // this.$store.commit('setPaymentsListData', this.fetchData());
     // this.fetch(this.fetchData())
     // this.$store.dispatch('fetchData')
-    this.fetchData(1);
-  
+    await this.fetchData();
+    if(this.$route.params?.page) {
+      this.page = Number(this.$route.params.page)
+    }
   },
 };
 </script>
 
-<style lang="scss" scoped>
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-h1 {
-  font-size: 20px;
-}
-.tt {
-  height: 160px;
-}
+<style>
 </style>
