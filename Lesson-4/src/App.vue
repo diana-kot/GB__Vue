@@ -12,7 +12,7 @@
       <pagination
           :cur="page"
           :n="n"
-          :length="paymentsList.length"
+          :length="12"
           @paginate="changePage"
         />
         
@@ -36,7 +36,7 @@ export default {
     return {
       show: true,
       page: 1,
-      n: 10,
+      n: 3,
   
     };
   },
@@ -46,15 +46,19 @@ export default {
       return this.$store.getters.getPaymentListFullValuePrise
     },
     currentElements() {
-      const { n, page } = this;
-      return this.paymentsList.slice(n * (page - 1), n * (page - 1) + n);
+      // const { n, page } = this;
+      return this.paymentsList.slice(this.n * (this.page - 1), this.n * (this.page - 1) + this.n);
     },
+    // currentElements() {
+    //   return this.getPaymentsList.slice(this.n * (this.page - 1), this.n * (this.page - 1) + this.n);
+    // },
   },
   methods: {
     ...mapMutations ({fetch: 'setPaymentsListData'}),
     ...mapActions(["addPaymentListData", 'fetchData']),
     changePage(p) {
       this.page = p;
+      this.fetchData(p);
     },
     // fetchData() {
     //   return [
