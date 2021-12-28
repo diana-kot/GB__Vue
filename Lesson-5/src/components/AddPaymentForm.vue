@@ -61,12 +61,12 @@ export default {
       };
 
     if (this.value !== 0 && this.category !== '') {
-      this.$emit('addNewPayment', data)
+      // this.$emit('addNewPayment', data)
+      this.addPaymentListData(data);
       
 
       if (this.$router.currentRoute.path.includes('/add/payment/')) {
-        this.addPaymentListData(data);
-        this.$router.push('/dashboard');
+        this.$router.push({name: 'AddNewPayments'});
       }
     }
     },
