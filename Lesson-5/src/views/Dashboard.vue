@@ -8,7 +8,7 @@
     <pagination
       :cur="page"
       :n="n"
-      :length="12"
+      :length="paymentsList.length"
       @paginate="changePage"
     />
   </main>
@@ -27,7 +27,7 @@ export default {
     return {
       show: true,
       page: 1,
-      n: 4,
+      n: 5,
     };
   },
   computed: {

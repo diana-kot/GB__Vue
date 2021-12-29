@@ -61,24 +61,27 @@ export default {
       };
 
     if (this.value !== 0 && this.category !== '') {
-      // this.$emit('addNewPayment', data)
+      this.$emit('addNewPayment', data)
       this.addPaymentListData(data);
       
 
-      if (this.$router.currentRoute.path.includes('/add/payment/')) {
-        this.$router.push({name: 'AddNewPayments'});
-      }
+      // if (this.$router.currentRoute.path.includes('/add/payment/')) {
+      //   this.$router.push({name: 'AddNewPayments'});
+      // }
     }
     },
   },
   async mounted() {
     if (!this.getCategoryList?.length) {
       await this.fetchCategory();
-
-      if (this.$route.name === 'AddPaymentFromUrl') {
+      this.category = this.categoryList[0];
+      // this.$route.name === 'AddNewPayments'
+      if (this.$route.name === 'AddNewPayments') {
         this.value = Number(this.$route.query?.value) || 0,
         this.category = this.$route?.params?.category || '',
-        this.isVisible = true
+        this.isVisible = true,
+        this.onSave();
+        this.$router.push({ name: 'dashboard' })
     }
     }
   },
