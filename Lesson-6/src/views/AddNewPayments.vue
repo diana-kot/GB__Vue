@@ -20,7 +20,7 @@
                 :to="{
                     name: 'AddNewPayments',
                     params: { category: 'Entertainment' },
-                    query: { value: '2000' },
+                    query: { value: '50' },
                 }"
             >Entertainment 2000</router-link>
         </div>
