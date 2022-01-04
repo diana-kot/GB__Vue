@@ -2,8 +2,7 @@
     <div class="wrapper">
         <div class="header">{{ settings.header }}</div>
         <div class="content">
-            <add-payment-form v-if="settings.content === 'AddPaymentForm'"/>
-            <auth-form v-if="settings.content ==='auth'"/>
+            <component :is="componentName" />
         </div>
         <div class="footer">
             <button @click="onclickClose">Close</button>
@@ -12,13 +11,14 @@
 </template>
 
 <script>
-import AuthForm from './AuthForm.vue';
-import AddPaymentForm from "./AddPaymentForm.vue";
+
+
 export default {
     props: {
+      componentName: String,
         settings: Object
     },
-    components: { AddPaymentForm, AuthForm },
+    components: { AddPaymentForm: ()=>('./AddPaymentForm.vue'), AuthForm: ()=>('./AuthForm.vue'), Calculator: ()=>('./Calculator.vue') },
     methods: {
         onclickClose() {
             this.$modal.hide();

@@ -56,7 +56,7 @@ export default {
       this.fetchData(p);
     },
     openModal() {
-      this.$modal.show("dashboard", {
+      this.$modal.show("AddPaymentForm", {
         content: "AddPaymentForm",
         header: "Add new cost",
       });

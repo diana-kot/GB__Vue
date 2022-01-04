@@ -7,7 +7,7 @@ export default {
   name: "About",
   methods: {
     openModal() {
-      this.$modal.show("auth", {
+      this.$modal.show("AuthForm", {
         content: "auth",
         header: "Auth Form",
       });

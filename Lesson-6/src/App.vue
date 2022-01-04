@@ -12,15 +12,23 @@
       <main>
         <router-view />
       </main>
+      <transition name="fade">
+        <modal-window-add-pyament-form
+          :settings="settings"
+          :componentName="componentName"
+          v-if="componentName"
+        />
+      </transition>
     </div>
-    <modal-window-add-pyament-form :settings="settings" v-if="componentName" />
   </div>
 </template>
 
 <script>
-import ModalWindowAddPyamentForm from "./components/ModalWindowAddPyamentForm";
 export default {
-  components: { ModalWindowAddPyamentForm },
+  components: {
+    ModalWindowAddPyamentForm: () =>
+      import("./components/ModalWindowAddPyamentForm"),
+  },
   name: "App",
 
   data() {
@@ -67,7 +75,15 @@ export default {
 h1 {
   font-size: 20px;
 }
-.tt {
-  height: 160px;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
+
