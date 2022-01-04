@@ -4,14 +4,12 @@
     <AddNewPayments />
 
     <payments-display :items="currentElements" />
-
     <pagination
       :cur="page"
       :n="n"
       :length="paymentsList.length"
       @paginate="changePage"
     />
-
     <button @click="openModal">Add new cost +</button>
   </main>
 </template>
@@ -22,7 +20,7 @@ import Pagination from "../components/Pagination.vue";
 import AddNewPayments from "./AddNewPayments.vue";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
-  name: "dashboard",
+  name: "Dashboard",
   components: { PaymentsDisplay, Pagination, AddNewPayments },
   data() {
     return {
@@ -32,7 +30,7 @@ export default {
         header: "Add new cost",
       },
       page: 1,
-      n: 5,
+      n: 10,
     };
   },
   computed: {
@@ -57,7 +55,7 @@ export default {
     },
     openModal() {
       this.$modal.show("AddPaymentForm", {
-        content: "AddPaymentForm",
+        content: "addPaymentForm",
         header: "Add new cost",
       });
     },

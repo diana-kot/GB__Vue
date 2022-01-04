@@ -4,7 +4,6 @@ import VueRouter from 'vue-router';
 
 
 
-
 Vue.use(VueRouter)
 
 
@@ -13,7 +12,6 @@ const routes = [{
         name: "dashboard",
         component: () =>
             import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-
     },
     {
         path: '/dashboard',
@@ -22,25 +20,27 @@ const routes = [{
             import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
     },
     {
-        path: '/about*',
+        path: "/about",
         name: "about",
         component: () =>
             import( /* webpackChunkName: "About" */ "../views/About.vue"),
     },
     {
-        path: '/notFound',
-        name: "notFound",
+        path: "/notfound",
+        name: "notfound",
         component: () =>
             import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
     },
+
     {
         path: '/add/payment/:category',
         name: 'AddNewPayments',
         component: () =>
-            import( /* webpackChunkName: "AddPaymentForm" */ "../components/AddPaymentForm.vue"),
+            import( /* webpackChunkName: "NotFound" */ "../components/AddPaymentForm.vue"),
+
     },
     {
-        path: '*',
+        path: "*",
         component: () =>
             import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
     },
