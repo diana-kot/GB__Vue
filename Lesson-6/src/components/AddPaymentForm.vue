@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <button class="btn btn-info" type="button" @click="isVisible = !isVisible">
+    <!-- <button class="btn btn-info" type="button" @click="isVisible = !isVisible">
       ADD NEW COST+
-    </button>
+    </button> -->
     <div class="categoryList">
       <select v-model="category">
         <option
@@ -33,7 +33,7 @@ export default {
       value: "",
       date: "",
       category: "",
-      isVisible: false,
+      isVisible: true,
     };
   },
   computed: {
@@ -89,10 +89,10 @@ export default {
 </script>
 <style>
 .add_cost {
-  margin-top: 10px;
+  /* margin-top: 10px;
   display: grid;
   grid-template-columns: 1fr;
-  width: 400px;
+  width: 400px; */
 }
 input {
   max-width: 200px;

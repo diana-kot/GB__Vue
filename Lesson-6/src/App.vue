@@ -7,40 +7,51 @@
         <!-- <router-link to="/notfound">notfound</router-link> -->
         <span @click="goToNotFound">notfound</span>
 
-        
-      
-
         <!-- <div class="title">My personal costs</div> -->
-      
       </header>
       <main>
         <router-view />
       </main>
     </div>
+    <modal-window-add-pyament-form :settings="settings" v-if="componentName" />
   </div>
 </template>
 
 <script>
-
-
+import ModalWindowAddPyamentForm from "./components/ModalWindowAddPyamentForm";
 export default {
-  
+  components: { ModalWindowAddPyamentForm },
   name: "App",
- 
+
   data() {
     return {
-     
+      settings: {},
+      componentName: "",
     };
   },
   methods: {
-  goToNotFound (){
-    if(this.$router.name === 'notFound') return;
-    this.$router.push({
-      name: "notFound"
-    })
-  }
-  }
-  
+    goToNotFound() {
+      if (this.$router.name === "notFound") return;
+      this.$router.push({
+        name: "notFound",
+      });
+    },
+    onShow({ name, settings }) {
+      this.componentName = name;
+      this.settings = settings;
+    },
+    onHide() {
+      (this.settings = {}), (this.componentName = "");
+    },
+  },
+  mounted() {
+    this.$modal.EventBus.$on("show", this.onShow);
+    this.$modal.EventBus.$on("hide", this.onHide);
+  },
+  beforeDestroy() {
+    this.$modal.EventBus.$off("show");
+    this.$modal.EventBus.$off("hide");
+  },
 };
 </script>
 
