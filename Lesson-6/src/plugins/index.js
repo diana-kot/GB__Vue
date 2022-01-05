@@ -15,18 +15,6 @@ export default {
             hide() {
                 this.EventBus.$emit('hide')
             },
-        },
-
-        Vue.prototype.$menu = {
-            EventBus: new Vue(),
-    
-            show(name, params) {
-                this.EventBus.$emit( 'shown', {name, params} );
-            },
-    
-            hide() {
-                this.EventBus.$emit( 'hiden' );
-            }
         }
     }
 }
