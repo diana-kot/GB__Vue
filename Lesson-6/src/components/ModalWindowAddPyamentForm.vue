@@ -23,7 +23,7 @@ export default {
   methods: {
     onclickClose() {
       this.$modal.hide();
-    },
+    },  
   },
 };
 </script>
