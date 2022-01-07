@@ -17,15 +17,16 @@
       ><input type="checkbox" v-model="showvk" />Отобразить экранную
       клавиатуру</label
     >
-    <div v-if="showvk">
+    <div class="keyBoard" v-if="showvk">
       Виртуальная клавиатура
       <button v-for="btn in 10" :key="btn" @click="inputNum(btn - 1)">
         {{ btn - 1 }}
       </button>
-      <button @click="eraseOne">E</button>
+      
+      <button @click="eraseOne" class="E">E</button>
       <br /><br />
-      <label><input type="radio" value="1" v-model="operch" />Операнд 1</label>
-      <label><input type="radio" value="2" v-model="operch" />Операнд 2</label>
+      <label><input type="radio" value="1" v-model="operch" name="radioOp1" />Операнд 1</label>
+      <label><input type="radio" value="2" v-model="operch" name="radioOp2" />Операнд 2</label>
     </div>
   </div>
 </template>
