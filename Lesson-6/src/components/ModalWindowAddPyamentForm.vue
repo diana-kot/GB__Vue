@@ -3,10 +3,7 @@
         <div class="header">{{ settings.header }}</div>
         <div class="content">
             <component 
-            :is="componentName"
-            
-
-       />
+            :is="componentName"/>
         </div>
         <div class="footer">
             <button @click="onclickClose">Close</button>
@@ -25,8 +22,6 @@ export default {
     components: {
       AddPaymentForm: ()=> import ('./AddPaymentForm.vue'), 
       AuthForm: ()=> import ('./AuthForm.vue'), 
-      ContextMenu: ()=> import ('./ContextMenu.vue'),
-      EditForm: ()=>import(/* webpackChunkName: 'EditFormForm' */'./EditForm.vue'),
       },
     methods: {
         onclickClose() {

@@ -28,6 +28,13 @@ const routes = [{
             import( /* webpackChunkName: "About" */ "../views/About.vue"),
     },
     {
+        path: '/editForm/:id',
+        name: "editForm",
+        component: () =>
+            import( /* webpackChunkName: "EditForm" */ "../components/AddPaymentForm.vue"),
+    },
+
+    {
         path: '/notFound',
         name: "notFound",
         component: () =>

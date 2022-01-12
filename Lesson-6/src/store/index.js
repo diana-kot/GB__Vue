@@ -39,10 +39,11 @@ export default new Vuex.Store({
         editDataInPaymentList(state, payload) {
             state.paymentList = state.paymentList.map(item => {
                 if (item.id === payload.id) {
-                  return Object.assign({}, item, payload)
+                    return Object.assign({}, item, payload)
                 }
 
                 return item
+               
             })
         }
     },
@@ -71,7 +72,7 @@ export default new Vuex.Store({
                   });
                 }
                 resolve(items);
-              }, 2000);
+              }, 0);
             }).then((res) => commit("setPaymentsListData", res));
           },
 
@@ -80,7 +81,7 @@ export default new Vuex.Store({
                 setTimeout(() => {
                     const items = ["Sport", "Education", "Internet", "Food", "Transport"];
                     resolve(items);
-                }, 1000);
+                }, 0);
             }).then((res) => commit("setCategoryData", res));
         },
 

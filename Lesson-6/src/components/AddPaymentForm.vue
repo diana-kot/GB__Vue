@@ -24,6 +24,9 @@
 import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   name: "AddPaymentForm",
+  props: {
+    contextIdElem: Number,
+  },
   data() {
     return {
       id: 0,
@@ -42,28 +45,39 @@ export default {
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
-    options(){
-      return this.$store.getters.getCategoryList
-    }
+    options() {
+      return this.$store.getters.getCategoryList;
+    },
   },
   methods: {
     ...mapMutations(["addPaymentListData"]),
     ...mapActions(["fetchCategory"]),
 
     onSave() {
-      // const { value, category} = this
-      const lastItemId = this.$store.getters.getPaymentList.length;
-      const data = {
-        date: this.date || this.getCurrentDate,
-        category: this.category,
-        value: this.value,
-        id: lastItemId + 1
-      };
-
-    if (this.value !== 0 && this.category !== '') {
-      this.$emit('addNewPayment', data)
-      this.addPaymentListData(data);
-    }
+      if (this.contextIdElem) {
+        const data = {
+          date: this.date || this.getCurrentDate,
+          category: this.category,
+          value: Number(this.value),
+          id: this.contextIdElem,
+        };
+        this.$store.dispatch("editDataInPaymentList", data);
+        this.$router.push({ name: "dashboard"});
+       
+      } else {
+        // const { value, category} = this
+        const lastItemId = this.$store.getters.getPaymentList.length;
+        const data = {
+          date: this.date || this.getCurrentDate,
+          category: this.category,
+          value: Number(this.value),
+          id: lastItemId + 1,
+        };
+        if (this.value !== 0 && this.category !== "") {
+          this.$emit("addNewPayment", data);
+          this.addPaymentListData(data);
+        }
+      }
     },
   },
   async mounted() {
@@ -71,33 +85,33 @@ export default {
       await this.fetchCategory();
       this.category = this.categoryList[0];
       // this.$route.name === 'AddNewPayments'
-      if (this.$route.name === 'AddNewPayments') {
-        this.value = Number(this.$route.query?.value) || 0,
-        this.category = this.$route?.params?.category || '',
-        this.isVisible = true,
-        this.onSave();
-        this.$router.push({ name: 'dashboard' })
-    }
+      if (this.$route.name === "AddNewPayments") {
+        (this.value = Number(this.$route.query?.value) || 0),
+          (this.category = this.$route?.params?.category || ""),
+          (this.isVisible = true),
+          this.onSave();
+        this.$router.push({ name: "dashboard" });
+      }
     }
   },
 };
 </script>
 <style lang="scss" scoped>
-  .add-cost-form {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 400px;
-    &>input {
-      max-width: 200px; 
-      margin-bottom: 5px;
-    }
-    &>select {
-      max-width: 208px; 
-      margin-bottom: 5px;
-    }
-    &>button{
-      max-width: 208px; 
-    }
+.add-cost-form {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 400px;
+  & > input {
+    max-width: 200px;
+    margin-bottom: 5px;
   }
+  & > select {
+    max-width: 208px;
+    margin-bottom: 5px;
+  }
+  & > button {
+    max-width: 208px;
+  }
+}
 </style>
