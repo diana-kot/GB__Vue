@@ -1,23 +1,14 @@
 <template>
-  <div class="wrapper">
-    <div class="categoryList">
-      <select v-model="category">
-        <option
-          v-for="(category, idx) in categoryList"
-          :key="idx"
-          :value="category"
-        >
-          {{ category }}
-        </option>
-      </select>
-    </div>
-    <div class="add_cost" v-show="isVisible">
-      <input placeholder="date" v-model="date" />
-      <input placeholder="category" v-model="category" />
-      <input placeholder="value" type="number" v-model.number="value" />
-      <button @click="onSave" :disabled="!category">Save</button>
-    </div>
-  </div>
+  <v-card class="text-left pa-8">
+    <v-text-field v-model="date" label="Date"> </v-text-field>
+    <v-select
+          :items="categoryList"
+          label="Category"
+          v-model="category"
+        ></v-select>
+    <v-text-field v-model.number="value" label="Value"> </v-text-field>
+    <v-btn @click="onSave">Save</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -99,21 +90,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.add-cost-form {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 400px;
-  & > input {
-    max-width: 200px;
-    margin-bottom: 5px;
-  }
-  & > select {
-    max-width: 208px;
-    margin-bottom: 5px;
-  }
-  & > button {
-    max-width: 208px;
-  }
-}
+// .add-cost-form {
+//   margin-top: 10px;
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   width: 400px;
+//   & > input {
+//     max-width: 200px;
+//     margin-bottom: 5px;
+//   }
+//   & > select {
+//     max-width: 208px;
+//     margin-bottom: 5px;
+//   }
+//   & > button {
+//     max-width: 208px;
+//   }
+// }
 </style>

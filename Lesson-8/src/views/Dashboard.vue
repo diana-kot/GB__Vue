@@ -1,32 +1,51 @@
 <template>
-  <main>
-    <div class="total" v-if="total">Total:{{ total }}</div>
-    <AddNewPayments />
+  <v-container>
+    <v-row>
+      <v-col>
+        <div class="text-h5 text-sm-h3 mb-8">My personal costs</div>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{on}">
+            <v-btn @click="openModal" color="teal" dark v-on="on">
+              ADD NEW COST <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+        
+            <add-payment-form @addNewPayment="dialog=false"/>
+          
+        </v-dialog>
 
-    <payments-display :items="currentElements" />
+        <div class="total" v-if="total">Total:{{ total }}</div>
+        <AddNewPayments />
 
-    <pagination
-      :cur="page"
-      :n="n"
-      :length="paymentsList.length"
-      @paginate="changePage"
-    />
-
-    <button @click="openModal">Add new cost +</button>
-  </main>
+        <payments-display :items="currentElements" />
+        <!-- <pagination
+          :cur="page"
+          :n="n"
+          :length="paymentsList.length"
+          @paginate="changePage"
+        /> -->
+        <!-- <button @click="openModal">Add new cost +</button> -->
+      </v-col>
+      <v-col>
+        chart
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import Pagination from "../components/Pagination.vue";
+// import Pagination from "../components/Pagination.vue";
 import AddNewPayments from "./AddNewPayments.vue";
+import AddPaymentForm from '../components/AddPaymentForm.vue';
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "dashboard",
-  components: { PaymentsDisplay, Pagination, AddNewPayments },
+  components: { PaymentsDisplay, AddNewPayments, AddPaymentForm },
   data() {
     return {
       addFormShow: false,
+      dialog: false,
       settings: {
         content: "AddPaymentForm",
         header: "Add new cost",
@@ -74,5 +93,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

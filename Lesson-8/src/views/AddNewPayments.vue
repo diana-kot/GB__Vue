@@ -35,12 +35,12 @@ export default {
 </script>
 
 <style>
-.paments {
+/* .paments {
     display: flex;
     justify-content: center;
     align-items: center;
     justify-content: space-between;
     gap: 30px;
     margin-bottom: 20px;
-}
+} */
 </style>

@@ -38,18 +38,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pagination {
-  &__wrapper {
-    display: flex;
-    justify-content: center;
-    & > div {
-      cursor: pointer;
-      padding: 10px;
-    }
-  }
-}
-.active {
-  background: #030303;
-  color: white;
-}
+// .pagination {
+//   &__wrapper {
+//     display: flex;
+//     justify-content: center;
+//     & > div {
+//       cursor: pointer;
+//       padding: 10px;
+//     }
+//   }
+// }
+// .active {
+//   background: #030303;
+//   color: white;
+// }
 </style>
