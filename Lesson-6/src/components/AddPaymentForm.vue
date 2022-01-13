@@ -15,7 +15,7 @@
       <input placeholder="date" v-model="date" />
       <input placeholder="category" v-model="category" />
       <input placeholder="value" type="number" v-model.number="value" />
-      <button @click="onSave" :disabled="!category">Save</button>
+      <button @click="onSave">Save</button>
     </div>
   </div>
 </template>
