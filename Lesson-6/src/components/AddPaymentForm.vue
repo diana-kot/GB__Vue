@@ -26,10 +26,10 @@ export default {
   name: "AddPaymentForm",
   props: {
     contextIdElem: Number,
+   
   },
   data() {
     return {
-      id: 0,
       value: "",
       date: "",
       category: "",
@@ -55,14 +55,13 @@ export default {
 
     onSave() {
       if (this.contextIdElem) {
-        const data = {
-          date: this.date || this.getCurrentDate,
+        const editdata = {
+          id: this.contextIdElem,
           category: this.category,
           value: Number(this.value),
-          id: this.contextIdElem,
         };
-        this.$store.dispatch("editDataInPaymentList", data);
-        this.$router.push({ name: "dashboard"});
+        this.$store.commit("editDataInPaymentList", editdata);
+        this.$modal.close();
        
       } else {
         // const { value, category} = this
@@ -71,12 +70,15 @@ export default {
           date: this.date || this.getCurrentDate,
           category: this.category,
           value: Number(this.value),
-          id: lastItemId + 1,
-        };
-        if (this.value !== 0 && this.category !== "") {
-          this.$emit("addNewPayment", data);
-          this.addPaymentListData(data);
-        }
+          id: lastItemId + 1
+          
+         
+        };       
+        this.$emit("addNewPayment", data)
+        // if (this.value !== 0 && this.category !== "") {
+        //   this.$emit("addNewPayment", data);
+        //   this.addPaymentListData(data);
+        // }
       }
     },
   },

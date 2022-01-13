@@ -36,16 +36,21 @@ export default new Vuex.Store({
             const indexItem = state.paymentList.indexOf(item)
             state.paymentList.splice(indexItem, 1)
         },
-        editDataInPaymentList(state, payload) {
-            state.paymentList = state.paymentList.map(item => {
-                if (item.id === payload.id) {
-                    return Object.assign({}, item, payload)
-                }
+        // editDataInPaymentList(state, data) {
+        //     state.paymentsList = state.paymentsList.map(item => {
+        //         if (item.id === data.id) {
+        //           return Object.assign({}, item, data)
+        //         }
 
-                return item
-               
-            })
-        }
+        //         return item
+        //     })
+        // },
+        editDataInPaymentList({ commit }, payload) {
+            const itemId = this.state.paymentList.findIndex((obj => obj.id == payload.id))
+            this.state.paymentList[itemId].category = payload.category
+            this.state.paymentList[itemId].value = payload.value
+            commit('setPaymentListData', this.state.paymentList)
+        },
     },
     getters: {
         getPaymentListFullValuePrise: state => {
@@ -53,9 +58,9 @@ export default new Vuex.Store({
         },
         getPaymentList: state => state.paymentList,
         getCategoryList: state => state.categoryList,
-        getPaymentsItem: (state) => (index) => {
-            return state.paymentsList[index -1]
-          },
+        // getPaymentsItem: state => (itemId) => {
+        //     return state.paymentsList[itemId -1]
+        // },
 
     },
     actions: {

@@ -3,7 +3,7 @@
         <div class="header">{{ settings.header }}</div>
         <div class="content">
             <component 
-            :is="componentName"/>
+            :is="componentName" :contextIdElem="settings.contextIdElem"  />
         </div>
         <div class="footer">
             <button @click="onclickClose">Close</button>
@@ -17,12 +17,17 @@
 export default {
     props: {
       componentName: String,
-        settings: Object
+        settings: Object,
+      
+        
+
     },
     components: {
       AddPaymentForm: ()=> import ('./AddPaymentForm.vue'), 
       AuthForm: ()=> import ('./AuthForm.vue'), 
-      },
+      EditForm: ()=>import(/* webpackChunkName: 'EditFormForm' */'./EditForm.vue')
+   },
+      
     methods: {
         onclickClose() {
             this.$modal.hide();

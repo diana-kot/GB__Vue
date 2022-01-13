@@ -31,7 +31,7 @@ const routes = [{
         path: '/editForm/:id',
         name: "editForm",
         component: () =>
-            import( /* webpackChunkName: "EditForm" */ "../components/AddPaymentForm.vue"),
+            import( /* webpackChunkName: "EditForm" */ "../components/EditForm.vue"),
     },
 
     {

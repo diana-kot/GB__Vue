@@ -24,16 +24,18 @@ export default {
         type: Array,
         default: () => [],
         },
-        showItems: {
-        type: Boolean,
-        default: false,
-        },
+        contextIdElem: Number,
+        
     },
     methods: {
         // this.$modal.show('EditForm', {header: 'Edit form', index: this.index})
-        editItem(item) {
-            console.log(item);
-            this.$router.push('/editForm/'+ item.id)
+        editItem() {
+            // console.log(item);
+            // this.$router.push('/editForm/'+ item.id)
+            this.$modal.show("EditForm", {
+                header: "Edit Payment",
+                index: this.contextIdElem,
+            });
             
         },
     onClickContextItem(event, item) {
