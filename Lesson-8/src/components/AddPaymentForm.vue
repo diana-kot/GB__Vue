@@ -1,110 +1,108 @@
 <template>
   <v-card class="text-left pa-8">
-    <v-text-field v-model="date" label="Date"> </v-text-field>
+    <v-text-field label="Payment date" v-model="date"></v-text-field>
+    <v-text-field label="Payment amount" v-model="value"></v-text-field>
     <v-select
-          :items="categoryList"
-          label="Category"
-          v-model="category"
-        ></v-select>
-    <v-text-field v-model.number="value" label="Value"> </v-text-field>
-    <v-btn @click="onSave">Save</v-btn>
+      :items="getCategoryList"
+      label="Category"
+      v-model="category"
+    ></v-select>
+    <v-btn class="save_btn" @click="onSave()"
+      >SAVE <v-icon>mdi-plus</v-icon></v-btn
+    >
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from "vuex";
+import { mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "AddPaymentForm",
   props: {
-    contextIdElem: Number,
-   
+    editedElem: Object,
   },
   data() {
     return {
+      isDisabled: false,
+      category: "",
       value: "",
       date: "",
-      category: "",
-      isVisible: true,
+      new_category: "",
     };
   },
   computed: {
-    ...mapGetters({ categoryList: "getCategoryList" }),
+    ...mapGetters(["getCategoryList"]),
     getCurrentDate() {
       const today = new Date();
       const d = today.getDate();
-      const m = today.getMonth() + 1;
+      const m = today.getMonth();
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
-    options() {
-      return this.$store.getters.getCategoryList;
-    },
   },
   methods: {
-    ...mapMutations(["addPaymentListData"]),
-    ...mapActions(["fetchCategory"]),
-
+    ...mapMutations({
+      addCategory: "addNewCategory",
+    }),
+    ...mapActions(["fetchCategoryList"]),
+    addToCategoryList() {
+      this.addCategory(this.new_category);
+    },
     onSave() {
-      if (this.contextIdElem) {
-        const editdata = {
-          id: this.contextIdElem,
+      if (this.editedElem) {
+        const data = {
+          id: this.editedElem.id,
           category: this.category,
           value: Number(this.value),
         };
-        this.$store.commit("editDataInPaymentList", editdata);
-        this.$modal.close();
-       
+        this.$store.dispatch("upgradeData", data);
+        this.$emit("closeAddPayment");
+        this.category = "";
+        this.value = "";
+        this.date = "";
       } else {
-        // const { value, category} = this
-        const lastItemId = this.$store.getters.getPaymentList.length;
         const data = {
-          date: this.date || this.getCurrentDate,
+          id: 0,
           category: this.category,
           value: Number(this.value),
-          id: lastItemId + 1
-          
-         
-        };       
-        this.$emit("addNewPayment", data)
-        // if (this.value !== 0 && this.category !== "") {
-        //   this.$emit("addNewPayment", data);
-        //   this.addPaymentListData(data);
-        // }
+          date: this.date || this.getCurrentDate,
+        };
+        this.$emit("addNewPayment", data);
+      }
+    },
+    changeElem() {
+      if (this.editedElem) {
+        this.isDisabled = true;
+        this.category = this.editedElem.category;
+        this.value = this.editedElem.value;
+      } else {
+        this.isDisabled = false;
+        this.category = "";
+        this.value = "";
+        this.date = "";
       }
     },
   },
-  async mounted() {
+  mounted() {
     if (!this.getCategoryList?.length) {
-      await this.fetchCategory();
-      this.category = this.categoryList[0];
-      // this.$route.name === 'AddNewPayments'
-      if (this.$route.name === "AddNewPayments") {
-        (this.value = Number(this.$route.query?.value) || 0),
-          (this.category = this.$route?.params?.category || ""),
-          (this.isVisible = true),
-          this.onSave();
-        this.$router.push({ name: "dashboard" });
-      }
+      this.fetchCategoryList();
     }
+    this.changeElem();
+    if (this.$route.params.category) {
+      this.category = this.$route.params.category;
+    }
+    if (this.$route.query.value) {
+      this.value = this.$route.query.value;
+    }
+  },
+  watch: {
+    editedElem() {
+      this.changeElem();
+    },
   },
 };
 </script>
+
 <style lang="scss" scoped>
-// .add-cost-form {
-//   margin-top: 10px;
-//   display: grid;
-//   grid-template-columns: 1fr;
-//   width: 400px;
-//   & > input {
-//     max-width: 200px;
-//     margin-bottom: 5px;
-//   }
-//   & > select {
-//     max-width: 208px;
-//     margin-bottom: 5px;
-//   }
-//   & > button {
-//     max-width: 208px;
-//   }
-// }
 </style>

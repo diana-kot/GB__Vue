@@ -1,85 +1,37 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
-
-
-
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Costs from '../views/Costs.vue'
+import About from '../views/About.vue'
 
 Vue.use(VueRouter)
 
+const routes = [
+  {
+    path: '/',
+    name: 'Costs',
+    component: Costs
+  }, {
+    path: '/costs',
+    name: 'CostsMain',
+    component: Costs
+  }, {
+    path: '/about',
+    name: 'About',
+    component: About
+  }, {
+    path: '/add/:section/:category',
+    component: Costs
+  }, {
+    path: '/add/:section',
+    component: Costs
+  },
+]
 
-const routes = [{
-        path: '/dashboard/:page',
-        name: "dashboard",
-        component: () =>
-            import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-
-    },
-    {
-        path: '/dashboard',
-        name: "dashboard",
-        component: () =>
-            import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-    },
-    {
-        path: '/about*',
-        name: "about",
-        component: () =>
-            import( /* webpackChunkName: "About" */ "../views/About.vue"),
-    },
-    {
-        path: '/editForm/:id',
-        name: "editForm",
-        component: () =>
-            import( /* webpackChunkName: "EditForm" */ "../components/EditForm.vue"),
-    },
-
-    {
-        path: '/notFound',
-        name: "notFound",
-        component: () =>
-            import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
-    },
-    {
-        path: '/add/payment/:category',
-        name: 'AddNewPayments',
-        component: () =>
-            import( /* webpackChunkName: "AddPaymentForm" */ "../components/AddPaymentForm.vue"),
-    },
-    {
-        path: '*',
-        component: () =>
-            import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
-    },
-
-];
 const router = new VueRouter({
-    mode: 'history',
-    routes,
-});
-
-const userAuth = true;
-router.beforeEach((to, from, next) => {
-    if (to.name !== "notfound" && !userAuth) {
-        next({
-            name: "notfound",
-        });
-    } else {
-        next();
-    }
-});
-
-
-const getTitleByRouters = (routeName) => {
-    return {
-        'dashboard': 'страница затрат',
-        'about': 'страница о сервисе',
-        'notFound': 'страница не найдена',
-    } [routeName]
-};
-
-router.afterEach((to) => {
-    document.title = getTitleByRouters(to.name)
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
 
-export default router;
+
+export default router

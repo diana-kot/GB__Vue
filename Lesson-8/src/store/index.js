@@ -10,65 +10,36 @@ export default new Vuex.Store({
         paymentListIds: [],
     },
     mutations: {
-        setPaymentsListData(state, payload) {
-            const newUnitIds = payload.filter((item) => {
-                return state.paymentListIds.indexOf(item.id) < 0
-            })
-            const uniqIds = newUnitIds.map(obj => obj.id)
-            state.paymentList.push(...newUnitIds);
-            state.paymentListIds.push(...uniqIds);
+        setPaymentListData(state, payload) {
+          state.paymentList = payload
         },
-        addPaymentListData(state, data) {
-            state.paymentList.push(data)
-
+        addPaymentListData(state, payload) {
+          state.paymentList.push(payload)
         },
-        getPaymentListFirstElement(state, payload) {
-            Vue.set(state.paymentList, 0, payload)
+        setCategoryList(state, payload) {
+          state.categoryList = payload
         },
-        setCategoryData(state, paylaod) {
-            state.categoryList = paylaod;
+        addNewCategory(state, payload) {
+          state.categoryList.push(payload)
         },
-        addCategoryToList(state, payload) {
-            state.categoryList.push(payload)
+        deleteData(state, payload) {
+          const itemIndex = state.paymentList.findIndex((obj => obj.id == payload))
+          state.paymentList.splice(itemIndex, 1)
         },
-        delItemFromPaymentList (state, itemId) {
-            const item = state.paymentList.find(el=> el.id === itemId)
-            const indexItem = state.paymentList.indexOf(item)
-            state.paymentList.splice(indexItem, 1)
-        },
-        // editDataInPaymentList(state, data) {
-        //     state.paymentsList = state.paymentsList.map(item => {
-        //         if (item.id === data.id) {
-        //           return Object.assign({}, item, data)
-        //         }
-
-        //         return item
-        //     })
-        // },
-        editDataInPaymentList({ commit }, payload) {
-            const itemId = this.state.paymentList.findIndex((obj => obj.id == payload.id))
-            this.state.paymentList[itemId].category = payload.category
-            this.state.paymentList[itemId].value = payload.value
-            commit('setPaymentListData', this.state.paymentList)
-        },
-    },
-    getters: {
-        getPaymentListFullValuePrise: state => {
-            return state.paymentList.reduce((pre, cur) => pre + cur.value, 0)
-        },
+      },
+      getters: {
         getPaymentList: state => state.paymentList,
         getCategoryList: state => state.categoryList,
-        // getPaymentsItem: state => (itemId) => {
-        //     return state.paymentsList[itemId -1]
-        // },
-
-    },
+        getFullPaymentValue: state => {
+          return state.paymentList.reduce((res, cur) => res + cur.value, 0)
+        }
+      },
     actions: {
         fetchData({ commit }) {
             return new Promise((resolve) => {
               setTimeout(() => {
                 const items = [];
-                for (let i = 1; i < 12; i++) {
+                for (let i = 1; i < 20; i++) {
                   items.push({
                     date: "20.12.2021",
                     category: "Education",
@@ -78,17 +49,25 @@ export default new Vuex.Store({
                 }
                 resolve(items);
               }, 0);
-            }).then((res) => commit("setPaymentsListData", res));
+            }).then((res) => commit("setPaymentListData", res));
           },
 
-        fetchCategory ({commit}) {
+          fetchCategoryList({ commit }) {
             return new Promise((resolve) => {
-                setTimeout(() => {
-                    const items = ["Sport", "Education", "Internet", "Food", "Transport"];
-                    resolve(items);
-                }, 0);
-            }).then((res) => commit("setCategoryData", res));
-        },
+              setTimeout(() => {
+                const items = ['Sport', 'Food', 'Education', 'Transport', 'Internet', 'Entertainment']
+                resolve(items)
+              }, 500)
+            }).then(res => {
+              commit('setCategoryList', res)
+            });
+          },
+          upgradeData({ commit }, payload) {
+            const itemIndex = this.state.paymentList.findIndex((obj => obj.id == payload.id))
+            this.state.paymentList[itemIndex].category = payload.category
+            this.state.paymentList[itemIndex].value = payload.value
+            commit('setPaymentListData', this.state.paymentList)
+          },
 
     },
 });
