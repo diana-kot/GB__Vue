@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 // export const localDB = {
 //     "page1": [{
 //             "id": 1,
@@ -86,7 +85,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         paymentList: [],
-
         categoryList: [],
         paymentListIds: [],
     },
@@ -100,7 +98,6 @@ export default new Vuex.Store({
             state.paymentListIds.push(...uniqIds);
         },
         addPaymentListData(state, data) {
-
             state.paymentList.push(data)
 
         },
@@ -120,7 +117,6 @@ export default new Vuex.Store({
 
     },
     actions: {
-
         fetchData({ commit }) {
             return new Promise((resolve) => {
               setTimeout(() => {
@@ -137,7 +133,6 @@ export default new Vuex.Store({
               }, 2000);
             }).then((res) => commit("setPaymentsListData", res));
           },
-
 
         fetchCategory({
             commit

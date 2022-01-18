@@ -1,39 +1,41 @@
 <template>
   <main>
-
     <div class="total" v-if="total">Total:{{ total }}</div>
     <AddNewPayments />
-    <add-payment-form />
+ 
     <payments-display :items="currentElements" />
     
     <pagination
       :cur="page"
       :n="n"
       :length="paymentsList.length"
-
       @paginate="changePage"
     />
+    
+    <button @click="addFormShow = true" >Add new cost +</button>
   </main>
 </template>
 
 <script>
-import AddPaymentForm from "../components/AddPaymentForm.vue";
+
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import Pagination from "../components/Pagination.vue";
-
 import AddNewPayments from "./AddNewPayments.vue"
+
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "dashboard",
-  components: { PaymentsDisplay, AddPaymentForm, Pagination, AddNewPayments },
-
+  components: { PaymentsDisplay, Pagination, AddNewPayments },
   data() {
     return {
+      addFormShow: false,
+      settings: {
+        content: 'AddPaymentForm',
+        header: "Add new cost"
+      },
       show: true,
       page: 1,
-
       n: 5,
-
     };
   },
   computed: {
@@ -53,7 +55,6 @@ export default {
       this.page = p;
       this.fetchData(p);
     },
-
   },
   async created() {
     // this.$store.commit('setPaymentsListData', this.fetchData());
