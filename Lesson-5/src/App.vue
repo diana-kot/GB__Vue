@@ -10,8 +10,9 @@
         
       
 
-        <!-- <div class="title">My personal costs</div> -->
-      
+
+        <!-- <div class="title">My personal costs</div>
+        <div class="total" v-if="total">Total:{{ total }}</div> -->
       </header>
       <main>
         <router-view />

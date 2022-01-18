@@ -62,18 +62,21 @@ export default {
 
     if (this.value !== 0 && this.category !== '') {
       this.$emit('addNewPayment', data)
+
       this.addPaymentListData(data);
       
 
       // if (this.$router.currentRoute.path.includes('/add/payment/')) {
       //   this.$router.push({name: 'AddNewPayments'});
       // }
+
     }
     },
   },
   async mounted() {
     if (!this.getCategoryList?.length) {
       await this.fetchCategory();
+
       this.category = this.categoryList[0];
       // this.$route.name === 'AddNewPayments'
       if (this.$route.name === 'AddNewPayments') {
@@ -82,6 +85,7 @@ export default {
         this.isVisible = true,
         this.onSave();
         this.$router.push({ name: 'dashboard' })
+
     }
     }
   },

@@ -4,7 +4,9 @@ import VueRouter from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
 import About from '../views/About.vue';
 import NotFound from '../views/NotFound.vue';
+
 import AddPaymentForm from '../components/AddPaymentForm.vue';
+
 
 Vue.use(VueRouter)
 
@@ -31,8 +33,10 @@ const routes = [{
     },
     {
         path: '/add/payment/:category',
+
         name: 'AddNewPayments',
         component: AddPaymentForm
+
     },
     {
         path: '*',
