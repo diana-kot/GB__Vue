@@ -26,8 +26,7 @@
           <v-date-picker
             v-model="date"
             no-title
-           
-             @click="formatDate()"
+            @input="menu1 = false"
           ></v-date-picker>
         </v-menu>
     </v-row>
@@ -92,8 +91,9 @@ export default {
           id: this.editedElem.id,
           category: this.category,
           value: Number(this.value),
-          date: this.formatDate(this.strToDate(this.editedElem.date)), 
+          date: this.dateFormatted //dathis.editedElem.date).toISOString().substr(0, 10)
         };
+        console.log('save_date', this.dateFormatted);
         this.$store.dispatch("upgradeData", data);
         this.$emit("closeAddPayment");
         this.category = "";
@@ -104,7 +104,7 @@ export default {
           id: 0,
           category: this.category,
           value: Number(this.value),
-          date: this.formatDate(this.date) || this.formatDate(Date.now()),//this.getCurrentDate),
+          date: this.dateFormatted || this.formatDate(Date.now()),
         };
         if (data.category !== '' && data.value !== ''){
           this.$emit("addNewPayment", data);
@@ -121,8 +121,12 @@ export default {
         this.isDisabled = false;
         this.category = this.editedElem.category;
         this.value = this.editedElem.value;
-        this.date = this.strToDate(this.editedElem.date);
-       
+        this.date = this.formatToDate(this.editedElem.date);
+        this.dateFormatted = this.editedElem.date;
+
+        // this.date = this.formatDate(this.editedElem.date)
+        console.log(this.editedElem.date);
+        console.log(this.formatToDate(this.editedElem.date));
         // console.log(typeof(this.parseDate(this.editedElem.date)))
       } else {
         this.isDisabled = false;
@@ -134,15 +138,25 @@ export default {
     formatDate (date) {
         if (!date) return null
         const options = {}
-        return new Intl.DateTimeFormat('ru-Ru', options).format(new Date(date))
-      },
+        console.log('formatDate')
+        console.log(typeof(new Intl.DateTimeFormat('ru-Ru', options).format(new Date(date))))
+        return  new Intl.DateTimeFormat('ru-Ru', options).format(new Date(date))
+    },
+    formatToDate (date) {
+      if (!date) return null
+      const [day, month, year] = date.split('.')
+      // (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      return `${year}-${month}-${day}`
+    },
     strToDate(datestr){
         if (!datestr) return null
+        console.log('strToDate')
         const [ day, month, year] = datestr.split('.')
         return new Date(year, month, day)
     },
     parseDate (date) {
         if (!date) return null
+        console.log('parse_data')
 
         const [ day, month, year] = date.split('.')
         return `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`
@@ -169,7 +183,7 @@ export default {
     },
     date () {
         this.dateFormatted = this.formatDate(this.date)
-        
+       
       },
   },
 };

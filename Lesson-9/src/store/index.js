@@ -66,7 +66,7 @@ export default new Vuex.Store({
             const itemIndex = this.state.paymentList.findIndex((obj => obj.id == payload.id))
             this.state.paymentList[itemIndex].category = payload.category
             this.state.paymentList[itemIndex].value = payload.value
-            // this.state.paymentList[itemIndex].date = payload.date
+            this.state.paymentList[itemIndex].date = payload.date
             commit('setPaymentListData', this.state.paymentList)
           },
 
