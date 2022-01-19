@@ -20,14 +20,14 @@
               persistent-hint
               prepend-icon="mdi-calendar"
               v-bind="attrs"
-              @blur="date = parseDate(dateFormatted)"
               v-on="on"
             ></v-text-field>
           </template>
           <v-date-picker
             v-model="date"
             no-title
-            @input="menu1 = false"
+           
+             @click="formatDate()"
           ></v-date-picker>
         </v-menu>
     </v-row>
@@ -55,7 +55,6 @@ export default {
   },
   
   data: vm => ( {
-    
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
       menu1: false,
@@ -63,18 +62,17 @@ export default {
       category: "",
       value: "",
       new_category: "",
-      
-    
+     
   }),
   computed: {
     ...mapGetters(["getCategoryList"]),
-    getCurrentDate() {
-      const today = new Date();
-      const d = today.getDate();
-      const m = today.getMonth();
-      const y = today.getFullYear();
-      return `${d}.${m}.${y}`;
-    },
+    // getCurrentDate() {
+    //   const today = new Date();
+    //   const d = today.getDate();
+    //   const m = today.getMonth() + 1;
+    //   const y = today.getFullYear();
+    //   return `${d}.${m}.${y}`;
+    // },
     computedDateFormatted () {
         return this.formatDate(this.date)
         
@@ -94,8 +92,7 @@ export default {
           id: this.editedElem.id,
           category: this.category,
           value: Number(this.value),
-          
-          
+          date: this.formatDate(this.strToDate(this.editedElem.date)), 
         };
         this.$store.dispatch("upgradeData", data);
         this.$emit("closeAddPayment");
@@ -107,7 +104,7 @@ export default {
           id: 0,
           category: this.category,
           value: Number(this.value),
-          date: this.formatDate(this.date) || this.formatDate(this.getCurrentDate),
+          date: this.formatDate(this.date) || this.formatDate(Date.now()),//this.getCurrentDate),
         };
         if (data.category !== '' && data.value !== ''){
           this.$emit("addNewPayment", data);
@@ -121,9 +118,12 @@ export default {
     },
     changeElem() {
       if (this.editedElem) {
-        this.isDisabled = true;
+        this.isDisabled = false;
         this.category = this.editedElem.category;
         this.value = this.editedElem.value;
+        this.date = this.strToDate(this.editedElem.date);
+       
+        // console.log(typeof(this.parseDate(this.editedElem.date)))
       } else {
         this.isDisabled = false;
         this.category = "";
@@ -136,8 +136,12 @@ export default {
         const options = {}
         return new Intl.DateTimeFormat('ru-Ru', options).format(new Date(date))
       },
-
-      parseDate (date) {
+    strToDate(datestr){
+        if (!datestr) return null
+        const [ day, month, year] = datestr.split('.')
+        return new Date(year, month, day)
+    },
+    parseDate (date) {
         if (!date) return null
 
         const [ day, month, year] = date.split('.')
@@ -157,6 +161,7 @@ export default {
     if (this.$route.query.value) {
       this.value = this.$route.query.value;
     }
+    
   },
   watch: {
     editedElem() {
