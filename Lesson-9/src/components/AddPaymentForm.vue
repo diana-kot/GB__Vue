@@ -145,7 +145,6 @@ export default {
     formatToDate (date) {
       if (!date) return null
       const [day, month, year] = date.split('.')
-      // (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       return `${year}-${month}-${day}`
     },
     strToDate(datestr){

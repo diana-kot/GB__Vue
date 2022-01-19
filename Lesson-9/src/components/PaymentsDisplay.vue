@@ -70,7 +70,11 @@
       <v-pagination
       v-model="page"
       :length="pageCount" 
+      :value="itemsPerPage"
+    
+        :total-visible="7"
       @input="handlePageChange"
+      current-page-aria-label="handlePageChange"
       ></v-pagination>
   </div>
   </div>
@@ -79,6 +83,7 @@
 <script>
 
 import AddPaymentForm from "./AddPaymentForm.vue";
+
 export default {
   components: { AddPaymentForm },
  
@@ -103,9 +108,10 @@ export default {
         { text: "Value", value: "value" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-      page: +this.$route.query.page || 1,
+      page: +this.$route.query.page,
       pageCount: 0,
-      itemsPerPage: 6,
+      itemsPerPage: 10,
+      itemsCurrent: [],
 
       dialog: false,
       dialogDelete: false,
@@ -121,6 +127,7 @@ export default {
   },
   created(){
     this.pageCount = this.items.length / this.itemsPerPage;
+  
     
   },
 
@@ -149,9 +156,16 @@ export default {
       this.dialogDelete = false;
     },
     handlePageChange(page){
+      this.itemsCurrent = this.items[page -1] || this.items[0]
       this.$router.push(`${this.$route.path}?page=${page}`)
      
     }
+    // setupPagination(items) {
+    //   this.items = _.chunk(items, this.itemsPerPage)
+    //   this.pageCount = _.size(this.items)
+    //   this.itemsCurrent = this.items[this.page -1] || this.items[0]
+
+    // }
   },
 };
 </script>
