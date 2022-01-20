@@ -1,10 +1,13 @@
 <template>
+
     <div class="wrapper">
         <div class="title">
+
         <div><b>#</b></div>
         <div><b>Date</b></div>
         <div><b>Category</b></div>
         <div><b>Value</b></div>
+
         </div>
         <div class="item" v-for="(item, idx) in items" :key="idx">
             <span>{{ idx + 1 }}</span>
@@ -14,6 +17,7 @@
             <span @click="onClickContextItem($event, item)">...</span>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -21,6 +25,7 @@ export default {
     name: "PaymentsDisplay",
     props: {
         items: {
+
         type: Array,
         default: () => [],
         },
@@ -79,3 +84,4 @@ export default {
     grid-template-columns: 1fr;
     }
 </style>
+

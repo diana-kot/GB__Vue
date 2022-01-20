@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
     state: {
         paymentList: [],
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         setCategoryData(state, paylaod) {
             state.categoryList = paylaod;
         },
+
         addCategoryToList(state, payload) {
             state.categoryList.push(payload)
         },
@@ -51,6 +53,7 @@ export default new Vuex.Store({
             this.state.paymentList[itemId].value = payload.value
             commit('setPaymentListData', this.state.paymentList)
         },
+
     },
     getters: {
         getPaymentListFullValuePrise: state => {
@@ -58,9 +61,11 @@ export default new Vuex.Store({
         },
         getPaymentList: state => state.paymentList,
         getCategoryList: state => state.categoryList,
+
         // getPaymentsItem: state => (itemId) => {
         //     return state.paymentsList[itemId -1]
         // },
+
 
     },
     actions: {
@@ -77,16 +82,20 @@ export default new Vuex.Store({
                   });
                 }
                 resolve(items);
+
               }, 0);
             }).then((res) => commit("setPaymentsListData", res));
           },
 
         fetchCategory ({commit}) {
+
             return new Promise((resolve) => {
                 setTimeout(() => {
                     const items = ["Sport", "Education", "Internet", "Food", "Transport"];
                     resolve(items);
+
                 }, 0);
+
             }).then((res) => commit("setCategoryData", res));
         },
 
