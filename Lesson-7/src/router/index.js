@@ -11,45 +11,31 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/dashboard/:page',
         name: "dashboard",
-
         component: () =>
             import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-
 
     },
     {
         path: '/dashboard',
         name: "dashboard",
-
         component: () =>
             import( /* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-
     },
     {
         path: '/about*',
         name: "about",
-
         component: () =>
             import( /* webpackChunkName: "About" */ "../views/About.vue"),
     },
-    {
-        path: '/editForm/:id',
-        name: "editForm",
-        component: () =>
-            import( /* webpackChunkName: "EditForm" */ "../components/EditForm.vue"),
-    },
-
     {
         path: '/notFound',
         name: "notFound",
         component: () =>
             import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
-
     },
     {
         path: '/add/payment/:category',
         name: 'AddNewPayments',
-
         component: () =>
             import( /* webpackChunkName: "AddPaymentForm" */ "../components/AddPaymentForm.vue"),
     },
@@ -57,7 +43,6 @@ const routes = [{
         path: '*',
         component: () =>
             import( /* webpackChunkName: "NotFound" */ "../views/NotFound.vue"),
-
     },
 
 ];

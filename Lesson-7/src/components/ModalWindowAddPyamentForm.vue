@@ -1,10 +1,12 @@
 <template>
-
     <div class="wrapper">
         <div class="header">{{ settings.header }}</div>
         <div class="content">
             <component 
-            :is="componentName" :contextIdElem="settings.contextIdElem"  />
+            :is="componentName"
+            
+
+       />
         </div>
         <div class="footer">
             <button @click="onclickClose">Close</button>
@@ -18,23 +20,19 @@
 export default {
     props: {
       componentName: String,
-        settings: Object,
-      
-        
-
+        settings: Object
     },
     components: {
       AddPaymentForm: ()=> import ('./AddPaymentForm.vue'), 
       AuthForm: ()=> import ('./AuthForm.vue'), 
-      EditForm: ()=>import(/* webpackChunkName: 'EditFormForm' */'./EditForm.vue')
-   },
-      
+      ContextMenu: ()=> import ('./ContextMenu.vue'),
+      EditForm: ()=>import(/* webpackChunkName: 'EditFormForm' */'./EditForm.vue'),
+      },
     methods: {
         onclickClose() {
             this.$modal.hide();
         },
     },
-
 };
 </script>
 
@@ -49,10 +47,8 @@ export default {
   width: 100%;
   height: 100%;
   background: #ffffffd9;
-
 }
   .overlay {
-
     z-index: 0;
     position: absolute;
     top: 0;
@@ -61,18 +57,14 @@ export default {
     left: 0;
     background: rgba(68, 61, 61, 0.5);
   }
-
   .content {
     position: relative;
     z-index: 200;
   }
   .footer {
-
     top: 140px;
     position: relative;
     z-index: 100;
   }
-
-
 
 </style>

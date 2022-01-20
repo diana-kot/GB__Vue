@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 export default new Vuex.Store({
     state: {
         paymentList: [],
@@ -29,7 +28,6 @@ export default new Vuex.Store({
         setCategoryData(state, paylaod) {
             state.categoryList = paylaod;
         },
-
         addCategoryToList(state, payload) {
             state.categoryList.push(payload)
         },
@@ -38,22 +36,15 @@ export default new Vuex.Store({
             const indexItem = state.paymentList.indexOf(item)
             state.paymentList.splice(indexItem, 1)
         },
-        // editDataInPaymentList(state, data) {
-        //     state.paymentsList = state.paymentsList.map(item => {
-        //         if (item.id === data.id) {
-        //           return Object.assign({}, item, data)
-        //         }
+        editDataInPaymentList(state, payload) {
+            state.paymentList = state.paymentList.map(item => {
+                if (item.id === payload.id) {
+                  return Object.assign({}, item, payload)
+                }
 
-        //         return item
-        //     })
-        // },
-        editDataInPaymentList({ commit }, payload) {
-            const itemId = this.state.paymentList.findIndex((obj => obj.id == payload.id))
-            this.state.paymentList[itemId].category = payload.category
-            this.state.paymentList[itemId].value = payload.value
-            commit('setPaymentListData', this.state.paymentList)
-        },
-
+                return item
+            })
+        }
     },
     getters: {
         getPaymentListFullValuePrise: state => {
@@ -61,11 +52,9 @@ export default new Vuex.Store({
         },
         getPaymentList: state => state.paymentList,
         getCategoryList: state => state.categoryList,
-
-        // getPaymentsItem: state => (itemId) => {
-        //     return state.paymentsList[itemId -1]
-        // },
-
+        getPaymentsItem: (state) => (index) => {
+            return state.paymentsList[index -1]
+          },
 
     },
     actions: {
@@ -82,20 +71,16 @@ export default new Vuex.Store({
                   });
                 }
                 resolve(items);
-
-              }, 0);
+              }, 2000);
             }).then((res) => commit("setPaymentsListData", res));
           },
 
         fetchCategory ({commit}) {
-
             return new Promise((resolve) => {
                 setTimeout(() => {
                     const items = ["Sport", "Education", "Internet", "Food", "Transport"];
                     resolve(items);
-
-                }, 0);
-
+                }, 1000);
             }).then((res) => commit("setCategoryData", res));
         },
 
