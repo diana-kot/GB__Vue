@@ -12,7 +12,7 @@
       <main>
         <router-view />
       </main>
-      <modal-window-add-pyament-form />
+
       <transition name="fade">
         <modal-window-add-pyament-form
           :settings="settings"
@@ -20,25 +20,30 @@
           v-if="componentName"
         />
       </transition>
+
+      <transition name="fade">
+        <context-menu/>
+      </transition>
+
     </div>
   </div>
 </template>
 
 <script>
+
+import ContextMenu from './components/ContextMenu.vue';
 export default {
-  name: "App",
-   components: {
+  components: {
     ModalWindowAddPyamentForm: () =>
-      import(
-      "./components/ModalWindowAddPyamentForm.vue"
-      ),
+      import("./components/ModalWindowAddPyamentForm"),
+      ContextMenu
   },
+  name: "App",
 
   data() {
     return {
-      settings:{
+      settings: {},
 
-      },
       componentName: "",
     };
   },
@@ -54,11 +59,19 @@ export default {
       this.settings = settings;
     },
     onHide() {
-      this.settings = {};
-      this.componentName = "";
+
+      (this.settings = {}), (this.componentName = "");
     },
   },
-  
+  mounted() {
+    this.$modal.EventBus.$on("show", this.onShow);
+    this.$modal.EventBus.$on("hide", this.onHide);
+  },
+  beforeDestroy() {
+    this.$modal.EventBus.$off("show");
+    this.$modal.EventBus.$off("hide");
+  },
+=
 };
 </script>
 
@@ -74,7 +87,17 @@ export default {
 h1 {
   font-size: 20px;
 }
-.tt {
-  height: 160px;
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
+
+

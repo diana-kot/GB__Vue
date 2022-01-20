@@ -2,17 +2,21 @@
   <main>
     <div class="total" v-if="total">Total:{{ total }}</div>
     <AddNewPayments />
- 
+
+
     <payments-display :items="currentElements" />
-    
+
+
     <pagination
       :cur="page"
       :n="n"
       :length="paymentsList.length"
       @paginate="changePage"
     />
-    
-    <button @click="addFormShow = true" >Add new cost +</button>
+
+
+    <button @click="openModal">Add new cost +</button>
+
   </main>
 </template>
 
@@ -20,7 +24,7 @@
 
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import Pagination from "../components/Pagination.vue";
-import AddNewPayments from "./AddNewPayments.vue"
+import AddNewPayments from "./AddNewPayments.vue";
 
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
@@ -30,10 +34,11 @@ export default {
     return {
       addFormShow: false,
       settings: {
-        content: 'AddPaymentForm',
-        header: "Add new cost"
+
+        content: "AddPaymentForm",
+        header: "Add new cost",
       },
-      show: true,
+
       page: 1,
       n: 5,
     };
@@ -45,7 +50,12 @@ export default {
     },
     currentElements() {
       // const { n, page } = this;
-      return this.paymentsList.slice(this.n * (this.page - 1), this.n * (this.page - 1) + this.n);
+
+      return this.paymentsList.slice(
+        this.n * (this.page - 1),
+        this.n * (this.page - 1) + this.n
+      );
+
     },
   },
   methods: {
@@ -55,14 +65,24 @@ export default {
       this.page = p;
       this.fetchData(p);
     },
+
+    openModal() {
+      this.$modal.show("AddPaymentForm", {
+        content: "AddPaymentForm",
+        header: "Add new cost",
+      });
+    },
+
   },
   async created() {
     // this.$store.commit('setPaymentsListData', this.fetchData());
     // this.fetch(this.fetchData())
     // this.$store.dispatch('fetchData')
     await this.fetchData(1);
-    if(this.$route.params?.page) {
-      this.page = Number(this.$route.params.page)
+
+    if (this.$route.params?.page) {
+      this.page = Number(this.$route.params.page);
+
     }
   },
 };

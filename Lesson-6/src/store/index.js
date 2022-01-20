@@ -3,84 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// export const localDB = {
-//     "page1": [{
-//             "id": 1,
-//             "date": "20.03.2020",
-//             "category": "Food",
-//             "value": 169
-//         },
-//         {
-//             "id": 2,
-//             "date": "21.03.2020",
-//             "category": "Navigation",
-//             "value": 50
-//         },
-//         {
-//             "id": 3,
-//             "date": "22.03.2020",
-//             "category": "Sport",
-//             "value": 450
-//         }
-//     ],
-//     "page2": [{
-//             "id": 4,
-//             "date": "23.03.2020",
-//             "category": "Entertaiment",
-//             "value": 969
-//         },
-//         {
-//             "id": 5,
-//             "date": "24.03.2020",
-//             "category": "Education",
-//             "value": 1500
-//         },
-//         {
-//             "id": 6,
-//             "date": "25.03.2020",
-//             "category": "Food",
-//             "value": 200
-//         }
-//     ],
-//     "page3": [{
-//             "id": 7,
-//             "date": "23.03.2020",
-//             "category": "Entertaiment",
-//             "value": 969
-//         },
-//         {
-//             "id": 8,
-//             "date": "24.03.2020",
-//             "category": "Education",
-//             "value": 1500
-//         },
-//         {
-//             "id": 9,
-//             "date": "25.03.2020",
-//             "category": "Food",
-//             "value": 200
-//         }
-//     ],
-//     "page4": [{
-//             "id": 10,
-//             "date": "23.03.2020",
-//             "category": "Entertaiment",
-//             "value": 969
-//         },
-//         {
-//             "id": 11,
-//             "date": "24.03.2020",
-//             "category": "Education",
-//             "value": 1500
-//         },
-//         {
-//             "id": 12,
-//             "date": "25.03.2020",
-//             "category": "Food",
-//             "value": 200
-//         }
-//     ],
-// }
 
 export default new Vuex.Store({
     state: {
@@ -107,6 +29,31 @@ export default new Vuex.Store({
         setCategoryData(state, paylaod) {
             state.categoryList = paylaod;
         },
+
+        addCategoryToList(state, payload) {
+            state.categoryList.push(payload)
+        },
+        delItemFromPaymentList (state, itemId) {
+            const item = state.paymentList.find(el=> el.id === itemId)
+            const indexItem = state.paymentList.indexOf(item)
+            state.paymentList.splice(indexItem, 1)
+        },
+        // editDataInPaymentList(state, data) {
+        //     state.paymentsList = state.paymentsList.map(item => {
+        //         if (item.id === data.id) {
+        //           return Object.assign({}, item, data)
+        //         }
+
+        //         return item
+        //     })
+        // },
+        editDataInPaymentList({ commit }, payload) {
+            const itemId = this.state.paymentList.findIndex((obj => obj.id == payload.id))
+            this.state.paymentList[itemId].category = payload.category
+            this.state.paymentList[itemId].value = payload.value
+            commit('setPaymentListData', this.state.paymentList)
+        },
+
     },
     getters: {
         getPaymentListFullValuePrise: state => {
@@ -114,6 +61,11 @@ export default new Vuex.Store({
         },
         getPaymentList: state => state.paymentList,
         getCategoryList: state => state.categoryList,
+
+        // getPaymentsItem: state => (itemId) => {
+        //     return state.paymentsList[itemId -1]
+        // },
+
 
     },
     actions: {
@@ -130,18 +82,20 @@ export default new Vuex.Store({
                   });
                 }
                 resolve(items);
-              }, 2000);
+
+              }, 0);
             }).then((res) => commit("setPaymentsListData", res));
           },
 
-        fetchCategory({
-            commit
-        }) {
+        fetchCategory ({commit}) {
+
             return new Promise((resolve) => {
                 setTimeout(() => {
                     const items = ["Sport", "Education", "Internet", "Food", "Transport"];
                     resolve(items);
-                }, 1000);
+
+                }, 0);
+
             }).then((res) => commit("setCategoryData", res));
         },
 
